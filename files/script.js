@@ -65,6 +65,7 @@ function openLightbox(thumbEl, item) {
   const backdrop = document.getElementById("lightboxBackdrop");
   const media = document.getElementById("lightboxMedia");
   const closeBtn = document.getElementById("lightboxClose");
+  const pauseBtn = document.getElementById("lightboxPause");
   const img = document.getElementById("lightboxImg");
   const video = document.getElementById("lightboxVideo");
 
@@ -76,6 +77,7 @@ function openLightbox(thumbEl, item) {
 
   // 影片先重置，圖片先顯示
   media.classList.remove("is-playing");
+  pauseBtn.classList.remove("is-open");
   video.pause();
   video.removeAttribute("src");
   video.load();
@@ -110,6 +112,7 @@ function openLightbox(thumbEl, item) {
     if (item.video) {
       video.src = item.video;
       media.classList.add("is-playing");
+      pauseBtn.classList.add("is-open");
       video.play().catch(() => {
         /* 使用者的瀏覽器可能需要互動才能自動播放，忽略錯誤即可 */
       });
@@ -135,11 +138,13 @@ function closeLightbox() {
   const backdrop = document.getElementById("lightboxBackdrop");
   const media = document.getElementById("lightboxMedia");
   const closeBtn = document.getElementById("lightboxClose");
+  const pauseBtn = document.getElementById("lightboxPause");
   const video = document.getElementById("lightboxVideo");
 
   clearTimeout(currentTimer);
   video.pause();
   media.classList.remove("is-playing");
+  pauseBtn.classList.remove("is-open");
   backdrop.classList.remove("is-open");
   closeBtn.classList.remove("is-open");
   document.body.style.overflow = "";
@@ -176,6 +181,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
   document.getElementById("lightboxBackdrop").addEventListener("click", closeLightbox);
+  const video = document.getElementById("lightboxVideo");
+  const pauseBtn = document.getElementById("lightboxPause");
+
+  pauseBtn.addEventListener("click", () => {
+    if (!video.src) return;
+    if (video.paused) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+
+  video.addEventListener("play", () => {
+    pauseBtn.textContent = "Ⅱ";
+    pauseBtn.setAttribute("aria-label", "暫停影片");
+    pauseBtn.setAttribute("aria-pressed", "false");
+  });
+
+  video.addEventListener("pause", () => {
+    pauseBtn.textContent = "▶";
+    pauseBtn.setAttribute("aria-label", "播放影片");
+    pauseBtn.setAttribute("aria-pressed", "true");
+  });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeLightbox();
   });
