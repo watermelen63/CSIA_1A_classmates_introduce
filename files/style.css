@@ -215,10 +215,35 @@ main {
   pointer-events: auto;
 }
 
+.lightbox-pause {
+  position: fixed;
+  right: 76px;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 102;
+}
+
+.lightbox-pause.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lightbox-media,
   .lightbox-backdrop,
-  .lightbox-close {
+  .lightbox-close,
+  .lightbox-pause {
     transition-duration: 0.01ms !important;
   }
 }
