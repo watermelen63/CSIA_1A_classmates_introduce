@@ -1,7 +1,7 @@
 const DATA_URL = "data.json";
 
 const ZOOM_DURATION = 450; // 需與 style.css 的 transition 時間一致
-const TARGET_MAX_WIDTH = 720; // 放大動畫「停止放大」時的最大寬度（px）
+const TARGET_MAX_WIDTH = 1000; // 放大動畫「停止放大」時的最大寬度（px）
 const TARGET_MAX_WIDTH_RATIO = 0.86; // 或視窗寬度的比例，取兩者較小值
 const ASPECT_RATIO = 3 / 2; // 需與 .thumb 的 aspect-ratio 一致
 
